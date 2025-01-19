@@ -129,7 +129,7 @@ struct ContentView: View {
                                    .lineSpacing(22)
                                    .foregroundColor(.black)
 
-                                 Text("22.5K followers")
+                                 Text("32.5K followers")
                                    .font(Font.custom("Sofia Pro", size: 12))
                                    .tracking(0.24)
                                    .lineSpacing(20.40)
