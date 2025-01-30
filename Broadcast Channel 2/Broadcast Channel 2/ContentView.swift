@@ -154,14 +154,17 @@ struct ContentView: View {
 
                         VStack(alignment: .leading, spacing: 0) {  // box 1 + replies
                             //Rectangle() // box 1
-                            Text("Box 1")
-                                .frame(maxWidth: 262, minHeight: 185, maxHeight: 185)
-                                .overlay(
-                                    Image("missy")
-                                        .resizable()
-                                        .scaledToFit()
-                                    //.aspectRatio(contentMode: .fill)
-                                )
+//                            Text("Box 1")
+                            ContentUnavailableView {
+                                Label("No Content", systemImage: "photo")
+                            }
+                            .frame(maxWidth: 262, minHeight: 185, maxHeight: 185)
+//                                .overlay(
+//                                    Image("missy")
+//                                        .resizable()
+//                                        .scaledToFit()
+//                                    //.aspectRatio(contentMode: .fill)
+//                                )
                                 .postContent(color: .black, radius: 8, textColor: .yellow)
                             
                             HStack(spacing: 4) { //emoji replies
