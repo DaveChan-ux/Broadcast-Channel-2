@@ -9,10 +9,12 @@
 /* Begin PBXBuildFile section */
 		6C15D5BE2D23BDD800052E70 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6C15D5BD2D23BDD800052E70 /* ConfettiSwiftUI */; };
 		6C18C36D2D4B3608003AD96A /* EffectsLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 6C18C36C2D4B3608003AD96A /* EffectsLibrary */; };
+		6C18C39D2D4B4D5A003AD96A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 6C18C39C2D4B4D53003AD96A /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6C15D5772D226E9000052E70 /* Broadcast Channel 2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Broadcast Channel 2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C18C39C2D4B4D53003AD96A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -39,6 +41,7 @@
 		6C15D56E2D226E9000052E70 = {
 			isa = PBXGroup;
 			children = (
+				6C18C39C2D4B4D53003AD96A /* .gitignore */,
 				6C15D5792D226E9000052E70 /* Broadcast Channel 2 */,
 				6C15D5782D226E9000052E70 /* Products */,
 			);
@@ -122,6 +125,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C18C39D2D4B4D5A003AD96A /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
