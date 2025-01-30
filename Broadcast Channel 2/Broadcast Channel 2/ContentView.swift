@@ -33,26 +33,25 @@ struct ContentView: View {
                         )
                 }
 
-                // BOX 3
-                HStack {
-                    VStack(spacing: 1) {
-                        Spacer()
-                        VStack(alignment: .leading, spacing: 0) {
-                            Text("Box 3")
-                                .frame(maxWidth: 262, minHeight: 185, maxHeight: 185)
-                                .background(Color.blue)
-                            
-                                .overlay(
-                                    Image("venom")
-                                        .resizable()
-                                        .scaledToFit()
-                                )
-                        }//end Vstack
-                        
-                        
+                // BOX 3 
+                HStack(spacing: 1) { //aligns box to the right
+                    Spacer()
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text("Box 3")
+                            .frame(maxWidth: 262, minHeight: 185, maxHeight: 185)
+                            .background(Color.blue)
+
+                            .overlay(
+                                Image("venom")
+                                    .resizable()
+                                    .scaledToFit()
+                            )
+                    }//end Vstack
+                }//end HStack
+
                         // BOX 4
-                        
-                        Spacer()
+                HStack(spacing: 1) { //aligns box to the right
+                    Spacer()
                         VStack(alignment: .leading, spacing: 0) {
                             Text("Box 4")
                                 .frame(maxWidth: 262, minHeight: 185, maxHeight: 185)
@@ -65,7 +64,6 @@ struct ContentView: View {
                                 )
                             
                         } //end VStack
-                    } //endVStack
                 }
                 //end HStack
 
