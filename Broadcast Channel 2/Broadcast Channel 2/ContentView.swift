@@ -6,70 +6,95 @@ struct ContentView: View {
 
 
     var body: some View {
-//        ConfettiView()
-        ScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-                // BOX 1
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("Box 1")
-                        .frame(maxWidth: 262, minHeight: 185, maxHeight: 185)
-                        .background(Color.blue)
-                        .overlay(
-                            Image("missy")
-                                .resizable()
-                                .scaledToFit()
-                        )
-                }
 
-                // BOX 2
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("Box 2")
-                        .frame(maxWidth: 262, minHeight: 185, maxHeight: 185)
-                        .background(Color.blue)
-                        .overlay(
-                            Image("lordbusiness")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                        )
-                }
+        var config = ConfettiConfig(
+            intensity: .low
+        )
 
-                // BOX 3 
-                HStack(spacing: 1) { //aligns box to the right
-                    Spacer()
+
+        ZStack {
+            ScrollView {
+
+                VStack(alignment: .leading, spacing: 16) {
+                    // BOX 1
                     VStack(alignment: .leading, spacing: 0) {
-                        Text("Box 3")
+                        Text("Box 1")
                             .frame(maxWidth: 262, minHeight: 185, maxHeight: 185)
-                            .background(Color.blue)
-
+                            .background(Color.gray.opacity(0.10))
+                            .cornerRadius(10)
                             .overlay(
-                                Image("venom")
+                                Image("missy")
                                     .resizable()
                                     .scaledToFit()
                             )
-                    }//end Vstack
-                }//end HStack
+                            .background(
+                                RoundedRectangle(cornerRadius:10) // Using background instead of overlay
+                                    .stroke(Color.black, lineWidth: 2)
+                            )
+                    }
 
-                        // BOX 4
-                HStack(spacing: 1) { //aligns box to the right
-                    Spacer()
+                    // BOX 2
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text("Box 2")
+                            .frame(maxWidth: 262, minHeight: 185, maxHeight: 185)
+                            .background(Color.white)
+                            .overlay(
+                                Image("lordbusiness")
+                                    .resizable()
+                                    .scaledToFit()
+                            )
+                            .overlay(
+                                Rectangle()
+                                    .stroke(Color.black, lineWidth: 2)
+//                                    .cornerRadius(10)
+                            )
+                    }
+
+                    // BOX 3 
+                    HStack(spacing: 1) { //aligns box to the right
+                        Spacer()
                         VStack(alignment: .leading, spacing: 0) {
-                            Text("Box 4")
+                            Text("Box 3")
                                 .frame(maxWidth: 262, minHeight: 185, maxHeight: 185)
                                 .background(Color.blue)
-                            
                                 .overlay(
                                     Image("venom")
                                         .resizable()
                                         .scaledToFit()
                                 )
-                            
-                        } //end VStack
-                }
-                //end HStack
+                                .overlay( // Add this overlay
+                                            Rectangle()
+                                                .stroke(Color.black, lineWidth: 2)
+                                        )
+                        }//end Vstack
+                    }//end HStack
+                    
+                    // BOX 4
+                    HStack(spacing: 1) { //aligns box to the right
+                        Spacer()
+                        VStack(alignment: .leading, spacing: 0) {
+                            Text("Box 4")
+                                .frame(maxWidth: 262, minHeight: 185, maxHeight: 185)
+                                .background(Color.white)
+                                .border(Color.gray, width: 1)
+                                .overlay(
+                                    Image("venom")
+                                        .resizable()
+                                        .scaledToFit()
+                                )
 
-            } //end VStack parent view
-            .padding()
-        } // end scrollview
+                        } //end VStack
+                    }
+                    //end HStack
+                    
+                } //end VStack parent view
+                .padding()
+            }.padding() //end ScrollView
+
+            ConfettiView(config: config)
+
+        }// end Zstack
+        .edgesIgnoringSafeArea(.all)
     } // end body view
 } //end content view
 
