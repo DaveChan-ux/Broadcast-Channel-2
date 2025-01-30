@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6C15D5BE2D23BDD800052E70 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6C15D5BD2D23BDD800052E70 /* ConfettiSwiftUI */; };
+		6C18C36D2D4B3608003AD96A /* EffectsLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 6C18C36C2D4B3608003AD96A /* EffectsLibrary */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C15D5BE2D23BDD800052E70 /* ConfettiSwiftUI in Frameworks */,
+				6C18C36D2D4B3608003AD96A /* EffectsLibrary in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +73,7 @@
 			name = "Broadcast Channel 2";
 			packageProductDependencies = (
 				6C15D5BD2D23BDD800052E70 /* ConfettiSwiftUI */,
+				6C18C36C2D4B3608003AD96A /* EffectsLibrary */,
 			);
 			productName = "Broadcast Channel 2";
 			productReference = 6C15D5772D226E9000052E70 /* Broadcast Channel 2.app */;
@@ -102,6 +105,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				6C15D5BC2D23BDD800052E70 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
+				6C18C36B2D4B3608003AD96A /* XCRemoteSwiftPackageReference "effects-library" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6C15D5782D226E9000052E70 /* Products */;
@@ -269,7 +273,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -299,7 +303,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -345,6 +349,14 @@
 				minimumVersion = 1.1.0;
 			};
 		};
+		6C18C36B2D4B3608003AD96A /* XCRemoteSwiftPackageReference "effects-library" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/GetStream/effects-library";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -352,6 +364,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6C15D5BC2D23BDD800052E70 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
 			productName = ConfettiSwiftUI;
+		};
+		6C18C36C2D4B3608003AD96A /* EffectsLibrary */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6C18C36B2D4B3608003AD96A /* XCRemoteSwiftPackageReference "effects-library" */;
+			productName = EffectsLibrary;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
