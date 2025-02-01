@@ -11,9 +11,11 @@ struct ContentView: View {
 //        backgroundColor: .blue,
         intensity: .medium,
         lifetime: .short,
-        initialVelocity: .medium,
+//        initialVelocity: .medium,
         fadeOut: .fast,
-        spreadRadius: .medium
+        spreadRadius: .medium,
+        emitterPosition: .bottom,
+        fallDirection: .upwards
     )
 
     var body: some View {
