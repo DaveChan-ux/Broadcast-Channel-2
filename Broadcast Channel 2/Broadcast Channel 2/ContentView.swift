@@ -7,9 +7,9 @@ struct ContentView: View {
 
     var body: some View {
 
-        var config = ConfettiConfig(
-            intensity: .low
-        )
+//        var config = ConfettiConfig(
+//            intensity: .low
+//        )
 
 
         ZStack {
@@ -91,12 +91,15 @@ struct ContentView: View {
                 .padding()
             }.padding() //end ScrollView
 
-            ConfettiView(config: config)
+//            ConfettiView(config: config)
+            ConfettiView()
 
         }// end Zstack
         .edgesIgnoringSafeArea(.all)
     } // end body view
 } //end content view
+
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
