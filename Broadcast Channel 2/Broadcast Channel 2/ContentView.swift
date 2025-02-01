@@ -1,20 +1,24 @@
 import SwiftUI
 import EffectsLibrary
 
-
 struct ContentView: View {
-
+    @State private var config = ConfettiConfig(
+        content: [
+            .emoji("💩", 1),
+            .emoji("💩", 1),
+            .emoji("💩", 2)
+                ],
+//        backgroundColor: .blue,
+        intensity: .medium,
+        lifetime: .short,
+        initialVelocity: .medium,
+        fadeOut: .fast,
+        spreadRadius: .medium
+    )
 
     var body: some View {
-
-//        var config = ConfettiConfig(
-//            intensity: .low
-//        )
-
-
         ZStack {
             ScrollView {
-
                 VStack(alignment: .leading, spacing: 16) {
                     // BOX 1
                     VStack(alignment: .leading, spacing: 0) {
@@ -28,7 +32,7 @@ struct ContentView: View {
                                     .scaledToFit()
                             )
                             .background(
-                                RoundedRectangle(cornerRadius:10) // Using background instead of overlay
+                                RoundedRectangle(cornerRadius:10)
                                     .stroke(Color.black, lineWidth: 2)
                             )
                     }
@@ -46,12 +50,11 @@ struct ContentView: View {
                             .overlay(
                                 Rectangle()
                                     .stroke(Color.black, lineWidth: 2)
-//                                    .cornerRadius(10)
                             )
                     }
 
-                    // BOX 3 
-                    HStack(spacing: 1) { //aligns box to the right
+                    // BOX 3
+                    HStack(spacing: 1) {
                         Spacer()
                         VStack(alignment: .leading, spacing: 0) {
                             Text("Box 3")
@@ -62,15 +65,15 @@ struct ContentView: View {
                                         .resizable()
                                         .scaledToFit()
                                 )
-                                .overlay( // Add this overlay
-                                            Rectangle()
-                                                .stroke(Color.black, lineWidth: 2)
-                                        )
-                        }//end Vstack
-                    }//end HStack
-                    
+                                .overlay(
+                                    Rectangle()
+                                        .stroke(Color.black, lineWidth: 2)
+                                )
+                        }
+                    }
+
                     // BOX 4
-                    HStack(spacing: 1) { //aligns box to the right
+                    HStack(spacing: 1) {
                         Spacer()
                         VStack(alignment: .leading, spacing: 0) {
                             Text("Box 4")
@@ -82,24 +85,18 @@ struct ContentView: View {
                                         .resizable()
                                         .scaledToFit()
                                 )
-
-                        } //end VStack
+                        }
                     }
-                    //end HStack
-                    
-                } //end VStack parent view
+                }
                 .padding()
-            }.padding() //end ScrollView
+            }
+            .padding()
 
-//            ConfettiView(config: config)
-            ConfettiView()
-
-        }// end Zstack
+            ConfettiView(config: config)
+        }
         .edgesIgnoringSafeArea(.all)
-    } // end body view
-} //end content view
-
-
+    }
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
