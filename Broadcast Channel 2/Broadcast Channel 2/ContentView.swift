@@ -4,19 +4,37 @@ import EffectsLibrary
 struct ContentView: View {
     @State private var config = ConfettiConfig(
         content: [
-            .emoji("💩", 1),
-            .emoji("💩", 1),
-            .emoji("💩", 2)
-                ],
-//        backgroundColor: .blue,
-        intensity: .medium,
+            .emoji("❤️", 1),
+            .emoji("❤️", 1),
+            //            .emoji("❤️", 1)
+        ],
+        //        backgroundColor: .blue,
+        intensity: .low,
         lifetime: .short,
-//        initialVelocity: .medium,
+        //        initialVelocity: .medium,
         fadeOut: .fast,
         spreadRadius: .medium,
-        emitterPosition: .bottom,
+        //        emitterPosition: .bottom,
         fallDirection: .upwards
     )
+
+    @State private var showConfetti = false // Add this state variable
+    @State private var confettiOpacity = 0.0 // Add this for opacity control
+
+    // Create feedback generator
+    let impactGenerator = UIImpactFeedbackGenerator(style: .medium)
+
+    func playHapticSequence() {
+        // Play initial haptic
+        impactGenerator.impactOccurred()
+
+        // Create 9 more haptics with delays
+        for i in 1...9 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(i) * 0.1) {
+                self.impactGenerator.impactOccurred()
+            }
+        }
+    }
 
     var body: some View {
         ZStack {
@@ -75,9 +93,30 @@ struct ContentView: View {
                     }
 
                     // BOX 4
-                    HStack(spacing: 1) {
-                        Spacer()
-                        VStack(alignment: .leading, spacing: 0) {
+                    VStack(alignment: .trailing) {
+                        ConfettiView(config: config)
+                            .opacity(confettiOpacity) // Add opacity binding
+                            .animation(.easeOut(duration: 1.0), value: confettiOpacity) // Animate opacity changes
+
+                        Button(action: {
+                            // Trigger haptic sequence
+                            playHapticSequence()
+
+                            showConfetti = true
+                            confettiOpacity = 1.0 // Fade in
+
+                            // Start fading out after a delay
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                withAnimation {
+                                    confettiOpacity = 0.0 // Fade out
+                                }
+                            }
+
+                            // Reset after animation completes
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                                showConfetti = false
+                            }
+                        }) {
                             Text("Box 4")
                                 .frame(maxWidth: 262, minHeight: 185, maxHeight: 185)
                                 .background(Color.white)
@@ -89,19 +128,30 @@ struct ContentView: View {
                                 )
                         }
                     }
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+
                 }
-                .padding()
+
             }
-            .padding()
 
-            ConfettiView(config: config)
+
         }
+        .padding()
         .edgesIgnoringSafeArea(.all)
-    }
-}
+        .onAppear {
+            impactGenerator.prepare()
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+            //            ConfettiView(config: config)
+        }
+
+
+
+    }
+
+
+    struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            ContentView()
+        }
     }
 }
