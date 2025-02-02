@@ -6,7 +6,7 @@ struct ContentView: View {
         content: [
             .emoji("❤️", 1),
             .emoji("❤️", 1),
-            //            .emoji("❤️", 1)
+            .emoji("❤️", 1)
         ],
         //        backgroundColor: .blue,
         intensity: .low,
