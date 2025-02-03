@@ -94,9 +94,7 @@ struct ContentView: View {
 
                     // BOX 4
                     VStack(alignment: .trailing) {
-                        ConfettiView(config: config)
-                            .opacity(confettiOpacity) // Add opacity binding
-                            .animation(.easeOut(duration: 1.0), value: confettiOpacity) // Animate opacity changes
+
 
                         Button(action: {
                             // Trigger haptic sequence
@@ -117,22 +115,46 @@ struct ContentView: View {
                                 showConfetti = false
                             }
                         }) {
-                            Text("Box 4")
-                                .frame(maxWidth: 262, minHeight: 185, maxHeight: 185)
-                                .background(Color.white)
-                                .border(Color.gray, width: 1)
-                                .overlay(
-                                    Image("venom")
+                            ZStack {
+
+                                HStack {
+                                    Text("Hi lovelies I'm so glad you're here")
+                                        .foregroundColor(.gray)
+                                        .frame(maxWidth: .infinity, alignment: .topLeading)
+                                        .padding()
+                                        .background(Color.white)
+                                        .cornerRadius(8)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 8)
+                                                .stroke(Color.gray, lineWidth: 1)
+                                        )
+
+                                    Image("avb")
                                         .resizable()
-                                        .scaledToFit()
-                                )
+                                        .scaledToFill()
+                                        .frame(width: 40, height: 40)
+                                        .clipShape(.circle)
+                                        .overlay(
+                                            Circle()
+                                                .stroke(Color(red: 255, green: 255, blue: 255), lineWidth: 1)
+                                        )
+
+                                }
+                                ConfettiView(config: config)
+                                    .opacity(confettiOpacity) // Add opacity binding
+                                    .animation(.easeOut(duration: 1.0), value: confettiOpacity) // Animate opacity changes
+                            } //end ZStack
+
                         }
-                    }
+                    } // end Box 4 VStack
                     .frame(maxWidth: .infinity, alignment: .trailing)
 
-                }
+                    
 
-            }
+
+                } // end Vstack
+
+            } //end scrollview
 
 
         }
