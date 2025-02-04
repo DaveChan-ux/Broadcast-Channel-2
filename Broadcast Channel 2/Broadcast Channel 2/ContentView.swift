@@ -73,6 +73,22 @@ struct ContentView: View {
                             )
                     }
 
+                    // BOX 2
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text("Box 2")
+                            .frame(maxWidth: 262, minHeight: 185, maxHeight: 185)
+                            .background(Color.white)
+                            .overlay(
+                                Image("lordbusiness")
+                                    .resizable()
+                                    .scaledToFit()
+                            )
+                            .overlay(
+                                Rectangle()
+                                    .stroke(Color.black, lineWidth: 2)
+                            )
+                    }
+
                     // BOX 3
                     HStack(spacing: 1) {
                         Spacer()
