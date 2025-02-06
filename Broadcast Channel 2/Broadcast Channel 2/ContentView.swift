@@ -37,7 +37,8 @@ struct ContentView: View {
     }
 
     var body: some View {
-        ZStack {
+//        ZStack {
+        NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
                     // BOX 1
@@ -56,7 +57,7 @@ struct ContentView: View {
                                     .stroke(Color.black, lineWidth: 2)
                             )
                     }
-
+                    
                     // BOX 2
                     VStack(alignment: .leading, spacing: 0) {
                         Text("Box 2")
@@ -72,7 +73,7 @@ struct ContentView: View {
                                     .stroke(Color.black, lineWidth: 2)
                             )
                     }
-
+                    
                     // BOX 2
                     VStack(alignment: .leading, spacing: 0) {
                         Text("Box 2")
@@ -88,7 +89,7 @@ struct ContentView: View {
                                     .stroke(Color.black, lineWidth: 2)
                             )
                     }
-
+                    
                     // BOX 3
                     HStack(spacing: 1) {
                         Spacer()
@@ -107,32 +108,32 @@ struct ContentView: View {
                                 )
                         }
                     }
-
+                    
                     // BOX 4
                     VStack(alignment: .trailing) {
-
-
+                        
+                        
                         Button(action: {
                             // Trigger haptic sequence
                             playHapticSequence()
-
+                            
                             showConfetti = true
                             confettiOpacity = 1.0 // Fade in
-
+                            
                             // Start fading out after a delay
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                                 withAnimation {
                                     confettiOpacity = 0.0 // Fade out
                                 }
                             }
-
+                            
                             // Reset after animation completes
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                                 showConfetti = false
                             }
                         }) {
                             ZStack {
-
+                                
                                 HStack {
                                     Text("Hi lovelies I'm so glad you're here")
                                         .foregroundColor(.gray)
@@ -144,7 +145,7 @@ struct ContentView: View {
                                             RoundedRectangle(cornerRadius: 8)
                                                 .stroke(Color.gray, lineWidth: 1)
                                         )
-
+                                    
                                     Image("avb")
                                         .resizable()
                                         .scaledToFill()
@@ -154,34 +155,58 @@ struct ContentView: View {
                                             Circle()
                                                 .stroke(Color(red: 255, green: 255, blue: 255), lineWidth: 1)
                                         )
-
+                                    
                                 }
                                 ConfettiView(config: config)
                                     .opacity(confettiOpacity) // Add opacity binding
                                     .animation(.easeOut(duration: 1.0), value: confettiOpacity) // Animate opacity changes
                             } //end ZStack
-
+                            
                         }
                     } // end Box 4 VStack
                     .frame(maxWidth: .infinity, alignment: .trailing)
-
                     
-
-
-                } // end Vstack
+                    
+                    
+                    
+                }
+                .padding()// end Vstack
 
             } //end scrollview
-
-
-        }
-        .padding()
-        .edgesIgnoringSafeArea(.all)
+            .navigationTitle("@AmberVenzBox")  // Add this!
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(.visible, for: .navigationBar)
+            .toolbarBackground(Color.white, for: .navigationBar)
+            .toolbar {  // Add here
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        // Your action here
+                    }) {
+                        Image(systemName: "plus")
+                    }
+                }
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: {
+                        // Your action here
+                    }) {
+                        Image(systemName: "arrow.left")
+                    }
+                }
+            }
+            .edgesIgnoringSafeArea(.all)
+        } //end navstack
         .onAppear {
             impactGenerator.prepare()
-
-            //            ConfettiView(config: config)
         }
 
+//        } //end Zstack
+//        .padding()
+//        .edgesIgnoringSafeArea(.all)
+//        .onAppear {
+//            impactGenerator.prepare()
+//
+//            //            ConfettiView(config: config)
+//        }
 
 
     }
