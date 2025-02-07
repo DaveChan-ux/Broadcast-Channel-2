@@ -173,7 +173,7 @@ struct ContentView: View {
                 .padding()// end Vstack
 
             } //end scrollview
-            .navigationTitle("@AmberVenzBox")  // Add this!
+            .navigationTitle("@AmberVenzBox")
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarBackground(Color.white, for: .navigationBar)
@@ -182,7 +182,17 @@ struct ContentView: View {
                     Button(action: {
                         // Your action here
                     }) {
-                        Image(systemName: "plus")
+                        Image(systemName: "chart.bar.fill")
+                            .foregroundColor(Color.gray)
+
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        // Your action here
+                    }) {
+                        Image(systemName: "ellipsis")
+                            .foregroundColor(Color.gray)
                     }
                 }
                 ToolbarItem(placement: .topBarLeading) {
@@ -190,6 +200,7 @@ struct ContentView: View {
                         // Your action here
                     }) {
                         Image(systemName: "arrow.left")
+                            .foregroundColor(Color.gray)
                     }
                 }
             }
