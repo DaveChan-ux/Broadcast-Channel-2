@@ -1,6 +1,7 @@
 import SwiftUI
 import EffectsLibrary
 
+
 struct ContentView: View {
     @State private var config = ConfettiConfig(
         content: [
