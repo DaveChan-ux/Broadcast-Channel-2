@@ -10,6 +10,7 @@
 		6C15D5BE2D23BDD800052E70 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6C15D5BD2D23BDD800052E70 /* ConfettiSwiftUI */; };
 		6C18C36D2D4B3608003AD96A /* EffectsLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 6C18C36C2D4B3608003AD96A /* EffectsLibrary */; };
 		6C18C39D2D4B4D5A003AD96A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 6C18C39C2D4B4D53003AD96A /* .gitignore */; };
+		6CD8DF6E2D610FE2007D8103 /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 6CD8DF6D2D610FE2007D8103 /* RiveRuntime */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 			files = (
 				6C15D5BE2D23BDD800052E70 /* ConfettiSwiftUI in Frameworks */,
 				6C18C36D2D4B3608003AD96A /* EffectsLibrary in Frameworks */,
+				6CD8DF6E2D610FE2007D8103 /* RiveRuntime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +79,7 @@
 			packageProductDependencies = (
 				6C15D5BD2D23BDD800052E70 /* ConfettiSwiftUI */,
 				6C18C36C2D4B3608003AD96A /* EffectsLibrary */,
+				6CD8DF6D2D610FE2007D8103 /* RiveRuntime */,
 			);
 			productName = "Broadcast Channel 2";
 			productReference = 6C15D5772D226E9000052E70 /* Broadcast Channel 2.app */;
@@ -109,6 +112,7 @@
 			packageReferences = (
 				6C15D5BC2D23BDD800052E70 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
 				6C18C36B2D4B3608003AD96A /* XCRemoteSwiftPackageReference "effects-library" */,
+				6CD8DF6C2D610FE2007D8103 /* XCRemoteSwiftPackageReference "rive-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6C15D5782D226E9000052E70 /* Products */;
@@ -361,6 +365,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		6CD8DF6C2D610FE2007D8103 /* XCRemoteSwiftPackageReference "rive-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rive-app/rive-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.6.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -373,6 +385,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6C18C36B2D4B3608003AD96A /* XCRemoteSwiftPackageReference "effects-library" */;
 			productName = EffectsLibrary;
+		};
+		6CD8DF6D2D610FE2007D8103 /* RiveRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6CD8DF6C2D610FE2007D8103 /* XCRemoteSwiftPackageReference "rive-ios" */;
+			productName = RiveRuntime;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

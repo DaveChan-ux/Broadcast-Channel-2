@@ -1,5 +1,5 @@
 {
-  "originHash" : "0bc90e9a8b76ee5ff2c9813ad5ca279d303d2596a37afd856027ae0702943dbb",
+  "originHash" : "22ee30bcaecc8493dabbbb0762eae6c8640ff34bc16c00a4f91910efcb2454c8",
   "pins" : [
     {
       "identity" : "confettiswiftui",
@@ -17,6 +17,15 @@
       "state" : {
         "revision" : "09ebd8e7536aa6dd70a48042244524e895ccd2aa",
         "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "rive-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rive-app/rive-ios",
+      "state" : {
+        "revision" : "287e19019ab9007997e81d8df40c055fef801e63",
+        "version" : "6.6.3"
       }
     }
   ],
