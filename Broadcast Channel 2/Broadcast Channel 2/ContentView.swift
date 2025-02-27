@@ -1,5 +1,6 @@
 import SwiftUI
 import EffectsLibrary
+import RiveRuntime
 
 
 struct ContentView: View {
@@ -22,6 +23,11 @@ struct ContentView: View {
     @State private var showConfetti = false // Add this state variable
     @State private var confettiOpacity = 0.0 // Add this for opacity control
 
+    //Rive
+    @StateObject private var stateChanger = RiveViewModel(fileName: "heartFloat3", stateMachineName: "State Machine 1" ,fit: .contain)
+    @State private var heartButtonFrame: CGRect = .zero
+    @State private var showHeartAnimation = false // To control visibility
+
     // Create feedback generator
     let impactGenerator = UIImpactFeedbackGenerator(style: .medium)
 
@@ -40,7 +46,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Image("applebg1")
+                Image("applebg1") //gradient background of the app
                             .resizable()
                             .scaledToFill()
                             .edgesIgnoringSafeArea(.all)
@@ -318,7 +324,7 @@ struct ContentView: View {
                         } // end Convo
                         .frame(maxWidth: .infinity, alignment: .trailing)
 
-                        // Convo
+                        // Convo with Heart Button
                         VStack(alignment: .leading, spacing: 0) {
                             HStack {
                                 Image("avb")
@@ -330,18 +336,86 @@ struct ContentView: View {
                                         Circle()
                                             .stroke(Color(red: 255, green: 255, blue: 255), lineWidth: 1)
                                     )
-                                Text("Well of course! you're welcome to visit anytime! We can't wait to see you!")
-                                    .foregroundColor(.gray)
-                                    .frame(maxWidth: .infinity, alignment: .topLeading)
-                                    .padding(10)
-                                    .background(Color.white)
-                                    .cornerRadius(8)
-//                                    .overlay(
-//                                        RoundedRectangle(cornerRadius: 8)
-//                                            .stroke(Color.gray, lineWidth: 1)
-//                                    )
-                            }
+
+                                VStack(alignment: .leading, spacing: 10) {
+                                    Text("Well of course! you're welcome to visit anytime! We can't wait to see you!")
+                                        .foregroundColor(.gray)
+                                        .frame(maxWidth: .infinity, alignment: .topLeading)
+                                        .padding(10)
+                                        .background(Color.white)
+                                        .cornerRadius(8)
+                                    HStack {
+                                        Button("❤️") {
+                                            stateChanger.triggerInput("beat")
+                                            showHeartAnimation = true
+
+                                            // Hide animation after it completes
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                                                showHeartAnimation = false
+                                            }
+                                        }
+                                        .padding(8)
+                                        .background(Color.white)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(8)
+                                        .background(
+                                            GeometryReader { geometry -> Color in
+                                                DispatchQueue.main.async {
+                                                    self.heartButtonFrame = geometry.frame(in: .global)
+                                                }
+                                                return Color.clear
+                                            }
+                                        )
+
+                                        Text("👍")
+                                        .padding(8)
+                                        .background(Color.white)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(8)
+
+                                        Text("🔥")
+                                            .padding(8)
+                                        .background(Color.white)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(8)
+
+                                        Text("😊")
+                                            .padding(8)
+                                        .background(Color.white)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(8)
+
+                                    }//end button HStack
+
+                                }//end VStack of text and emoji buttons
+
+                            }//end HStack of profile and text
                             .padding(.trailing, 40)
+
+                            // Heart button - with position tracking
+//                            HStack {
+//                                Button("❤️") {
+//                                    stateChanger.triggerInput("beat")
+//                                    showHeartAnimation = true
+//
+//                                    // Hide animation after it completes
+//                                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+//                                        showHeartAnimation = false
+//                                    }
+//                                }
+//                                .padding()
+//                                .background(Color.gray)
+//                                .foregroundColor(.white)
+//                                .cornerRadius(8)
+//                                .background(
+//                                    GeometryReader { geometry -> Color in
+//                                        DispatchQueue.main.async {
+//                                            self.heartButtonFrame = geometry.frame(in: .global)
+//                                        }
+//                                        return Color.clear
+//                                    }
+//                                )
+//                            }
                         }
 
                         // Convo
@@ -352,10 +426,6 @@ struct ContentView: View {
                                     .scaledToFill()
                                     .frame(width: 40, height: 40)
                                     .clipShape(.circle)
-//                                    .overlay(
-//                                        Circle()
-//                                            .stroke(Color(red: 255, green: 255, blue: 255), lineWidth: 1)
-//                                    )
                                 Text("And of course, bring your friends!It's a party afterall!")
                                     .foregroundColor(.gray)
                                     .frame(maxWidth: .infinity, alignment: .topLeading)
@@ -368,6 +438,13 @@ struct ContentView: View {
 //                                    )
                             }
                             .padding(.trailing, 40)
+//                            .overlay{
+//                                stateChanger.view()
+//                                    .frame(width: 300, height: 300)
+//                                }
+
+
+                            
                         }
 
 
@@ -439,6 +516,17 @@ struct ContentView: View {
                     }
                     .padding(10)// end Vstack
 
+                    .overlay(
+                        GeometryReader { geometry in
+                            stateChanger.view()
+                                .frame(width: 300, height: 300)
+                                .allowsHitTesting(false)
+//                                .opacity(stateChanger.isPlaying ? 1 : 0)
+                                .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
+                                .zIndex(100)
+                        }
+                    )
+
                 } //end scrollview
                 .navigationTitle("Chat with Amber")
                 .navigationBarTitleDisplayMode(.inline)
@@ -471,6 +559,19 @@ struct ContentView: View {
                     }
                 }
                 .edgesIgnoringSafeArea(.all)
+
+                if showHeartAnimation && heartButtonFrame != .zero {
+                                    stateChanger.view()
+                                        .frame(width: 300, height: 300)
+                                        .position(
+                                            x: heartButtonFrame.midX,
+                                            y: heartButtonFrame.minY - 200
+                                        )
+                                        .zIndex(100)
+                                        .allowsHitTesting(false)
+                                }
+
+
             } // end Zstack
         } //end navstack
         .onAppear {
