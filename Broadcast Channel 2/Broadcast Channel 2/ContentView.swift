@@ -6,23 +6,23 @@ extension Color {
 
 struct ContentView: View {
 
-    // Add state variables for the animation
-    @State private var isFlashing = false
-    @State private var flashCount = 0
-    let maxFlashCount = 3
+    // Change to wiggle animation state
+    @State private var wiggleOffset: CGFloat = 0
+    @State private var wiggleCount = 0
+    let maxWiggleCount = 3  // Increased for a more noticeable effect
 
-    // Add a state to control the scroll sequence
+    // Keep the scroll stage state
     @State private var scrollStage = 0
 
     var body: some View {
-        
+
         NavigationStack {
             ZStack {
                 Image("applebg1")
                     .resizable()
                     .scaledToFill()
                     .edgesIgnoringSafeArea(.all)
-                    .opacity(0.5)  // Adjust this value as neede
+                    .opacity(0.5)  // Adjust this value as needed
 
                 // Wrap ScrollView in a ScrollViewReader
                 ScrollView {
@@ -89,23 +89,19 @@ struct ContentView: View {
                             }
                             .frame(maxWidth: .infinity, alignment: .trailing)
 
-                            // Message to animate
+                            // Message to animate - changed to wiggle animation
                             VStack(alignment: .trailing) {
                                 HStack {
                                     Text("Man what a crazy weekend.")
                                         .foregroundColor(.gray)
                                         .padding(10)
-                                        .background(
-                                            // Animate this background
-                                            RoundedRectangle(cornerRadius: 8)
-                                                .fill(isFlashing ? Color.customLightGray : Color.white)
-                                                .animation(
-                                                    Animation.easeInOut(duration: 0.3)
-                                                        .repeatCount(1, autoreverses: true),
-                                                    value: isFlashing
-                                                )
-                                        )
+                                        .background(Color.white)
                                         .cornerRadius(8)
+                                        .offset(x: wiggleOffset) // Add horizontal offset for wiggle
+                                        .animation(
+                                            Animation.easeInOut(duration: 0.15), // Faster animation for wiggle
+                                            value: wiggleOffset
+                                        )
                                         .id("animatedMessage")
 
                                     Image("dctc")
@@ -130,7 +126,6 @@ struct ContentView: View {
 
                                     Text("really.")
                                         .foregroundColor(.gray)
-                                    //                                .frame(maxWidth: .infinity, alignment: .topLeading)
                                         .padding(10)
                                         .background(Color.white)
                                         .cornerRadius(8)
@@ -151,7 +146,6 @@ struct ContentView: View {
 
                                     Text("tell me all about it.")
                                         .foregroundColor(.gray)
-                                    //                                .frame(maxWidth: .infinity, alignment: .topLeading)
                                         .padding(10)
                                         .background(Color.white)
                                         .cornerRadius(8)
@@ -172,7 +166,6 @@ struct ContentView: View {
 
                                     Text("I had a pretty good weekend too.")
                                         .foregroundColor(.gray)
-                                    //                                .frame(maxWidth: .infinity, alignment: .topLeading)
                                         .padding(10)
                                         .background(Color.white)
                                         .cornerRadius(8)
@@ -212,7 +205,6 @@ struct ContentView: View {
 
                                     Text("This year it got warm quickly. Last year was pretty depressing.")
                                         .foregroundColor(.gray)
-                                    //                                .frame(maxWidth: .infinity, alignment: .topLeading)
                                         .padding(10)
                                         .background(Color.white)
                                         .cornerRadius(8)
@@ -233,7 +225,6 @@ struct ContentView: View {
 
                                     Text("WhatI like about this year is that I have a lot of free time.")
                                         .foregroundColor(.gray)
-                                    //                                .frame(maxWidth: .infinity, alignment: .topLeading)
                                         .padding(10)
                                         .background(Color.white)
                                         .cornerRadius(8)
@@ -412,9 +403,9 @@ struct ContentView: View {
                                 }
                             }
 
-                            // Step 3: Start the flashing animation after the scroll completes
+                            // Step 3: Start the wiggle animation after the scroll completes
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2.2) {
-                                self.flashAnimation()
+                                self.wiggleAnimation()
                             }
                         }
                     } // end ScrollViewReader
@@ -454,23 +445,28 @@ struct ContentView: View {
         } // end NavigationStack
     }
 
-    // Function to control the flash animation
-    private func flashAnimation() {
-        // Only continue if we haven't reached max flash count
-        guard flashCount < maxFlashCount else { return }
+    // Replaced flash animation with wiggle animation
+    private func wiggleAnimation() {
+        // Only continue if we haven't reached max wiggle count
+        guard wiggleCount < maxWiggleCount else { return }
 
-        // Toggle flash state
-        isFlashing = true
+        // Wiggle to the right
+        wiggleOffset = 15
 
-        // Reset after animation duration
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.isFlashing = false
-            self.flashCount += 1
+        // Schedule wiggle to the left
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.wiggleOffset = -15
 
-            // Schedule next flash with delay
-            if self.flashCount < self.maxFlashCount {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    self.flashAnimation()
+            // Schedule return to center
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.wiggleOffset = 0
+                self.wiggleCount += 1
+
+                // Schedule next wiggle with a small delay
+                if self.wiggleCount < self.maxWiggleCount {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        self.wiggleAnimation()
+                    }
                 }
             }
         }
