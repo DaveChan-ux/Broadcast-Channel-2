@@ -8,8 +8,6 @@ struct ContentView: View {
     @State private var showScrollUpHint: Bool = false
     @State private var isLoadingOlderMessages: Bool = false
     @State private var didInitialScrollSequence: Bool = false
-    // Controls how far up the content moves - this is a value between 0 and 1
-    // Lower values position content higher up (more scrolled)
     @State private var scrollPositionY: CGFloat = 0.9
 
     @State private var scrollViewProxy: ScrollViewProxy? = nil
@@ -25,8 +23,6 @@ struct ContentView: View {
                 backgroundView
 
                 VStack(spacing: 0) {
-                    loadingIndicator
-
                     messageListView
                         .navigationTitle("Chat with Amber")
                         .navigationBarTitleDisplayMode(.inline)
@@ -51,7 +47,28 @@ struct ContentView: View {
                         }
                 }
 
-                pullUpHintView
+                // Bottom status elements - either hint or loading indicator
+                VStack {
+                    Spacer()
+
+                    if isLoadingOlderMessages {
+                        // Loading indicator
+                        ProgressView()
+                            .padding(6)
+                            .background(Material.thin)
+                            .clipShape(Capsule())
+                            .padding(.bottom, 15)
+                    } else if showScrollUpHint {
+                        // Pull up to refresh hint
+                        Text("pull up to refresh")
+                            .font(.caption)
+                            .foregroundColor(.black)
+                            .padding(12)
+                            .background(Material.thick)
+                            .clipShape(Capsule())
+                            .padding(.bottom, 8)
+                    }
+                }
             }
         }
     }
@@ -66,16 +83,6 @@ struct ContentView: View {
             .opacity(0.5)
     }
 
-    var loadingIndicator: some View {
-        Group {
-            if isLoadingOlderMessages {
-                ProgressView()
-                    .padding(.vertical, 10)
-                    .transition(.opacity)
-            }
-        }
-    }
-
     var messageListView: some View {
         ScrollView {
             ScrollViewReader { proxy in
@@ -87,7 +94,15 @@ struct ContentView: View {
         }
         .coordinateSpace(name: coordinateSpaceName)
         .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
-            if value > -5 && value < 100 && !isLoadingOlderMessages && showScrollUpHint && didInitialScrollSequence {
+            // This needs to detect when user has pulled up enough to trigger the refresh
+            if value < -50 && !isLoadingOlderMessages && showScrollUpHint && didInitialScrollSequence {
+                // This is the key part! When user pulls up, start loading
+                withAnimation {
+                    isLoadingOlderMessages = true
+                    showScrollUpHint = false
+                }
+
+                // Then handle the refresh logic
                 handleRefreshLogic()
             }
         }
@@ -153,24 +168,6 @@ struct ContentView: View {
         .padding(10)
     }
 
-    var pullUpHintView: some View {
-        Group {
-            if showScrollUpHint && !isLoadingOlderMessages {
-                VStack {
-                    Spacer()
-                    Text("pull up to refresh")
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                        .padding(6)
-                        .background(Material.thin)
-                        .clipShape(Capsule())
-                        .padding(.bottom, 15)
-                        .transition(.opacity.combined(with: .move(edge: .bottom)))
-                }
-            }
-        }
-    }
-
     // MARK: - Helper Methods
 
     func handleInitialSetup(proxy: ScrollViewProxy) {
@@ -199,26 +196,17 @@ struct ContentView: View {
     }
 
     func handleRefreshLogic() {
-        guard !isLoadingOlderMessages else { return }
-
-        withAnimation {
-            showScrollUpHint = false // Disappears
-            isLoadingOlderMessages = true // Loading indicator appears
-        }
-
-        // 3. Simulate loading data
+        // Simulate loading data
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             // In a real app, you'd add new messages to the top of your data source here.
-            // For this demo, we just simulate the end of loading.
 
             withAnimation {
-                isLoadingOlderMessages = false // Loading indicator disappears
+                isLoadingOlderMessages = false // Hide the loading indicator
             }
 
-            // 4. Page goes back to its normal state
-            // Scroll to the top to show the "newly loaded" (simulated) content
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // Slight delay for UI to update
-                 withAnimation(.easeInOut) {
+            // Scroll to the top to show the "newly loaded" content
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                withAnimation(.easeInOut) {
                     scrollViewProxy?.scrollTo(topItemID, anchor: .top)
                 }
             }
