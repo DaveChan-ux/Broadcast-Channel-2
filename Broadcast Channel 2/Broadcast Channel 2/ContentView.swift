@@ -10,6 +10,12 @@ struct ContentView: View {
     @State private var didInitialScrollSequence: Bool = false
     @State private var scrollPositionY: CGFloat = 0.9
 
+    // Add states to track scroll position and direction
+    @State private var previousScrollOffset: CGFloat = 0
+    @State private var isScrollingUp: Bool = false
+    @State private var dragInProgress: Bool = false
+    @State private var pullDistance: CGFloat = 0
+
     @State private var scrollViewProxy: ScrollViewProxy? = nil
     let topItemID = "topMessage"
     let lastMessageID = "last-message-id"
@@ -58,7 +64,8 @@ struct ContentView: View {
                             .background(Material.thin)
                             .clipShape(Capsule())
                             .padding(.bottom, 15)
-                    } else if showScrollUpHint {
+                            .transition(.opacity)
+                    } else if showScrollUpHint && (isScrollingUp || dragInProgress) {
                         // Pull up to refresh hint
                         Text("pull up to refresh")
                             .font(.caption)
@@ -67,6 +74,7 @@ struct ContentView: View {
                             .background(Material.thin)
                             .clipShape(Capsule())
                             .padding(.bottom, 8)
+                            .transition(.opacity)
                     }
                 }
             }
@@ -93,18 +101,59 @@ struct ContentView: View {
             }
         }
         .coordinateSpace(name: coordinateSpaceName)
-        .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
-            // This needs to detect when user has pulled up enough to trigger the refresh
-            if value < -50 && !isLoadingOlderMessages && showScrollUpHint && didInitialScrollSequence {
-                // This is the key part! When user pulls up, start loading
-                withAnimation {
-                    isLoadingOlderMessages = true
-                    showScrollUpHint = false
-                }
+        .simultaneousGesture(
+            DragGesture(minimumDistance: 5, coordinateSpace: .named(coordinateSpaceName))
+                .onChanged { gesture in
+                    dragInProgress = true
 
-                // Then handle the refresh logic
-                handleRefreshLogic()
+                    // Update scrolling direction
+                    let currentPosition = gesture.translation.height
+                    isScrollingUp = currentPosition < 0 // In SwiftUI, scrolling up (to see more at bottom) has negative translation
+
+                    // Update pull distance for threshold detection
+                    if isScrollingUp && didInitialScrollSequence && showScrollUpHint {
+                        pullDistance = currentPosition
+
+                        // Check if we've pulled enough to trigger loading
+                        if pullDistance < -50 && !isLoadingOlderMessages {
+                            withAnimation {
+                                isLoadingOlderMessages = true
+                                showScrollUpHint = false
+                            }
+
+                            // Handle the refresh logic
+                            handleRefreshLogic()
+                        }
+                    }
+                }
+                .onEnded { _ in
+                    // When drag ends, reset states
+                    dragInProgress = false
+                    pullDistance = 0
+
+                    // If user was scrolling down, hide the hint
+                    if !isScrollingUp && showScrollUpHint && !isLoadingOlderMessages {
+                        withAnimation {
+                            showScrollUpHint = false
+                        }
+                    }
+                }
+        )
+        .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
+            // Track scroll direction by comparing with previous value
+            if !dragInProgress {
+                isScrollingUp = value < previousScrollOffset
+
+                // Hide hint when scrolling down
+                if !isScrollingUp && showScrollUpHint && !isLoadingOlderMessages {
+                    withAnimation {
+                        showScrollUpHint = false
+                    }
+                }
             }
+
+            // Store current value for next comparison
+            previousScrollOffset = value
         }
     }
 
@@ -188,6 +237,8 @@ struct ContentView: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                     withAnimation {
                         self.showScrollUpHint = true
+                        // Initialize as scrolling up since that's the initial hint state
+                        self.isScrollingUp = true
                     }
                     self.didInitialScrollSequence = true
                 }
@@ -204,10 +255,10 @@ struct ContentView: View {
                 isLoadingOlderMessages = false // Hide the loading indicator
             }
 
-            // Scroll to the top to show the "newly loaded" content
+            // Scroll back to the bottom to show the most recent messages
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 withAnimation(.easeInOut) {
-                    scrollViewProxy?.scrollTo(topItemID, anchor: .top)
+                    scrollViewProxy?.scrollTo(lastMessageID, anchor: .bottom)
                 }
             }
         }
