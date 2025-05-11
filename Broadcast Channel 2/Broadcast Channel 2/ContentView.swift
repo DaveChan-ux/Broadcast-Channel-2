@@ -30,19 +30,19 @@ struct ContentView: View {
 
                 VStack(spacing: 0) {
                     messageListView
-                        .navigationTitle("Chat with Amber")
+                        .navigationTitle("AmberVenzBox")
                         .navigationBarTitleDisplayMode(.inline)
                         .toolbarBackground(.visible, for: .navigationBar)
                         .toolbarBackground(.regularMaterial, for: .navigationBar)
                         .toolbar {
                             ToolbarItem(placement: .topBarTrailing) {
                                 Button(action: {}) {
-                                    Image(systemName: "chart.bar.fill").foregroundColor(Color.gray)
+                                    Image(systemName: "square.and.arrow.up").foregroundColor(Color.gray)
                                 }
                             }
                             ToolbarItem(placement: .topBarTrailing) {
                                 Button(action: {}) {
-                                    Image(systemName: "ellipsis").foregroundColor(Color.gray)
+                                    Image(systemName: "bell.slash").foregroundColor(Color.gray)
                                 }
                             }
                             ToolbarItem(placement: .topBarLeading) {
@@ -61,7 +61,7 @@ struct ContentView: View {
                         // Loading indicator
                         ProgressView()
                             .padding(6)
-                            .background(Material.thin)
+//                            .background(Material.thin)
                             .clipShape(Capsule())
                             .padding(.bottom, 15)
                             .transition(.opacity)
@@ -69,9 +69,9 @@ struct ContentView: View {
                         // Pull up to refresh hint
                         Text("pull up to refresh")
                             .font(.caption)
-                            .foregroundColor(.black)
+                            .foregroundColor(.gray)
                             .padding(12)
-                            .background(Material.thin)
+//                            .background(Material.thin)
                             .clipShape(Capsule())
                             .padding(.bottom, 8)
                             .transition(.opacity)
@@ -84,11 +84,8 @@ struct ContentView: View {
     // MARK: - Component Views
 
     var backgroundView: some View {
-        Image("applebg1")
-            .resizable()
-            .scaledToFill()
+        Color.white
             .edgesIgnoringSafeArea(.all)
-            .opacity(0.5)
     }
 
     var messageListView: some View {
@@ -171,44 +168,45 @@ struct ContentView: View {
                 .id(topItemID)
 
             // All message views
-            MessageView(text: "Hey happy Monday", imageName: "dctc", isUser: true)
-            MessageView(text: "Hey happy Monday", imageName: "dctc", isUser: true)
-            MessageView(text: "Hey happy Monday", imageName: "dctc", isUser: true)
+            MessageView(text: "Check out my latest", imageName: "avb", isUser: false)
+            MessageView(text: "Hey happy Monday", imageName: "avb", isUser: false)
+            MessageView(text: "Hey happy Monday", imageName: "avb", isUser: false)
 
             // Fourth message with ID
             VStack(alignment: .trailing) {
                 HStack {
+                    Image("avb").resizable().scaledToFill().frame(width: 40, height: 40).clipShape(.circle)
                     Text("Man what a crazy weekend.")
                         .foregroundColor(.gray)
                         .padding(10)
                         .background(RoundedRectangle(cornerRadius: 8).fill(Color.white))
                         .cornerRadius(8)
                         .id(animatedMessageID)
-                    Image("dctc").resizable().scaledToFill().frame(width: 40, height: 40).clipShape(.circle)
+
                 }
-                .padding(.leading, 40)
+//                .padding(.leading, 40)
             }
-            .frame(maxWidth: .infinity, alignment: .trailing)
+            .frame(maxWidth: .infinity, alignment: .leading)
 
             MessageView(text: "really.", imageName: "avb", isUser: false)
             MessageView(text: "tell me all about it.", imageName: "avb", isUser: false)
             MessageView(text: "I had a pretty good weekend too.", imageName: "avb", isUser: false)
 
-            MessageView(text: "Man seattle gets so nice around this time of year.", imageName: "dctc", isUser: true)
+            MessageView(text: "Man seattle gets so nice around this time of year.", imageName: "avb", isUser: false)
                 .id(seventhMessageActualID)
 
             MessageView(text: "This year it got warm quickly. Last year was pretty depressing.", imageName: "avb", isUser: false)
             MessageView(text: "WhatI like about this year is that I have a lot of free time.", imageName: "avb", isUser: false)
-            MessageView(text: "Sometime I wonder if I should be interested in something else", imageName: "dctc", isUser: true)
-            MessageView(text: "But I'll keep trying", imageName: "dctc", isUser: true)
-            MessageView(text: "This message is just to let you know that I am still working on this project.", imageName: "dctc", isUser: true)
-            MessageView(text: "And now, I am ready to launch!", imageName: "dctc", isUser: true)
-            MessageView(text: "blah blah blah", imageName: "dctc", isUser: true)
-            MessageView(text: "oh look I forgot a message", imageName: "dctc", isUser: true)
-            MessageView(text: "oh look I forgot a message", imageName: "dctc", isUser: true)
+            MessageView(text: "Sometime I wonder if I should be interested in something else", imageName: "avb", isUser: false)
+            MessageView(text: "But I'll keep trying", imageName: "avb", isUser: false)
+            MessageView(text: "This message is just to let you know that I am still working on this project.", imageName: "avb", isUser: false)
+            MessageView(text: "And now, I am ready to launch!", imageName: "avb", isUser: false)
+            MessageView(text: "blah blah blah", imageName: "avb", isUser: false)
+            MessageView(text: "oh look I forgot a message", imageName: "avb", isUser: false)
+            MessageView(text: "oh look I forgot a message", imageName: "avb", isUser: false)
 
             // Last message with ID
-            MessageView(text: "oh look I forgot a message", imageName: "dctc", isUser: true)
+            MessageView(text: "oh look I forgot a message", imageName: "avb", isUser: false)
                 .id(lastMessageID)
 
             // Space for hint - make sure there's room for it
@@ -281,8 +279,12 @@ struct MessageView: View {
                 Text(text)
                     .foregroundColor(.gray)
                     .padding(10)
-                    .background(Color.white)
+                    .background(Color(red: 249/255, green: 249/255, blue: 251/255))
                     .cornerRadius(8)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color(red: 226/255, green: 227/255, blue: 233/255), lineWidth: 1)
+                    )
                 if isUser {
                     Image(imageName)
                         .resizable().scaledToFill().frame(width: 40, height: 40).clipShape(.circle)
