@@ -168,18 +168,22 @@ struct ContentView: View {
                 .id(topItemID)
 
             // All message views
-            MessageView(text: "Check out my latest", imageName: "avb", isUser: false)
-            MessageView(text: "Hey happy Monday", imageName: "avb", isUser: false)
-            MessageView(text: "Hey happy Monday", imageName: "avb", isUser: false)
+            MessageView(text: "Hi everyone! Before we sart, I just want you to know how grateful I am for you guys! I'm so excited to get to know you all a bit better here and find out more about you!", imageName: "avb", isUser: false)
+            MessageView(text: "Funny story when I started my blog back in 2010, it was actually an idea that came about because Baxter told me I should do it to find someone who cares...all about the fashion I would talk to him about 😂 I totally agreed! I wanted to share with people who love what I love! So..I'm so happy to meet you here! ", imageName: "avb", isUser: false)
+            MessageView(text: "I'm thinking this forum is a great place to share the quick things that come to mind across everyday and please let me know what you would like to see here!", imageName: "avb", isUser: false)
 
             // Fourth message with ID
             VStack(alignment: .trailing) {
                 HStack {
                     Image("avb").resizable().scaledToFill().frame(width: 40, height: 40).clipShape(.circle)
-                    Text("Man what a crazy weekend.")
+                    Text("First up I bought a beautiful veronica Beard suede chore coat this year and I paid full price because I really thought it would sell out. It's $800 off today! Here's the original video I posted about it: https://liketk.it/554dh.")
                         .foregroundColor(.gray)
                         .padding(10)
-                        .background(RoundedRectangle(cornerRadius: 8).fill(Color.white))
+                        .background(Color(red: 249/255, green: 249/255, blue: 251/255))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color(red: 226/255, green: 227/255, blue: 233/255), lineWidth: 1)
+                        )
                         .cornerRadius(8)
                         .id(animatedMessageID)
 
@@ -188,25 +192,25 @@ struct ContentView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
-            MessageView(text: "really.", imageName: "avb", isUser: false)
+            MessageView(text: "It's a classic piece very elegant and very on trend, yet timeless. this is perfect for the Americana ranch trend and is also stunning for the English countryside...and also football games. It is so fine..", imageName: "avb", isUser: false)
             MessageView(text: "tell me all about it.", imageName: "avb", isUser: false)
-            MessageView(text: "I had a pretty good weekend too.", imageName: "avb", isUser: false)
+            MessageView(text: "Ok team, the new Zara collection is a good one and I just found this dress (that's very Valentino with a nautical style collar. It's $119 and I've never checked out so fast. Y'all know how Zara sells out in 5 seconds. This piece looks amazing online - flip the pics. Long sleeves but a mini...goes with so many pieces and places. Eeee can't arrive soon enough!", imageName: "avb", isUser: false)
 
-            MessageView(text: "Man seattle gets so nice around this time of year.", imageName: "avb", isUser: false)
+            MessageView(text: "Also my girls Easter shoes are on sale for $16!", imageName: "avb", isUser: false)
                 .id(seventhMessageActualID)
 
-            MessageView(text: "This year it got warm quickly. Last year was pretty depressing.", imageName: "avb", isUser: false)
-            MessageView(text: "WhatI like about this year is that I have a lot of free time.", imageName: "avb", isUser: false)
-            MessageView(text: "Sometime I wonder if I should be interested in something else", imageName: "avb", isUser: false)
-            MessageView(text: "But I'll keep trying", imageName: "avb", isUser: false)
-            MessageView(text: "This message is just to let you know that I am still working on this project.", imageName: "avb", isUser: false)
-            MessageView(text: "And now, I am ready to launch!", imageName: "avb", isUser: false)
-            MessageView(text: "blah blah blah", imageName: "avb", isUser: false)
-            MessageView(text: "oh look I forgot a message", imageName: "avb", isUser: false)
-            MessageView(text: "oh look I forgot a message", imageName: "avb", isUser: false)
+            MessageView(text: "https://liketk.it/59qad?product=da12345.", imageName: "avb", isUser: false)
+            MessageView(text: "Aaaand pulled the New Balance x Miu Miu for you. Actually to ways to get the look! Such finds https://liketk.it/5cAaM.", imageName: "avb", isUser: false)
+            MessageView(text: "Ok this isn't my LTK post but I had to share because of how she styled the napkins! 😍 SUCH an amazing good hack! That table looks amazing. https://liketik.t/5cDRn", imageName: "avb", isUser: false)
+//            MessageView(text: "But I'll keep trying", imageName: "avb", isUser: false)
+//            MessageView(text: "This message is just to let you know that I am still working on this project.", imageName: "avb", isUser: false)
+//            MessageView(text: "And now, I am ready to launch!", imageName: "avb", isUser: false)
+//            MessageView(text: "blah blah blah", imageName: "avb", isUser: false)
+//            MessageView(text: "oh look I forgot a message", imageName: "avb", isUser: false)
+//            MessageView(text: "oh look I forgot a message", imageName: "avb", isUser: false)
 
             // Last message with ID
-            MessageView(text: "oh look I forgot a message", imageName: "avb", isUser: false)
+            MessageView(text: "Just came across this little kids tee that says kickin' it with mom with a cute cowboy boot and it's $6! I'm kind of obsessed. Going into summer and being Mother's Day weekend this is a yes: Short-sleeved Graphic T-shirt for Toddler Boys | Old Navy", imageName: "avb", isUser: false)
                 .id(lastMessageID)
 
             // Space for hint - make sure there's room for it
@@ -271,7 +275,8 @@ struct MessageView: View {
 
     var body: some View {
         VStack(alignment: isUser ? .trailing : .leading) {
-            HStack {
+            
+            HStack(alignment: .top) {  // Added alignment: .top here
                 if !isUser {
                     Image(imageName)
                         .resizable().scaledToFill().frame(width: 40, height: 40).clipShape(.circle)
